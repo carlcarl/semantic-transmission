@@ -45,7 +45,7 @@ function Inspector(controller) {
             ev.stopPropagation();
 
         // select this tab and deselect the others
-        $(tab).addClass('selected').siblings().removeClass('selected');
+        $(tab).addClass('active').siblings().removeClass('active');
 
         // show this tab and hide the others
         $('#' + tab.id.replace('tab','page')).show().siblings('.inspector-page').hide();

@@ -11,6 +11,8 @@
 		<script type="text/javascript" src="./javascript/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="./javascript/jquery/jqueryui-1.8.16.min.js"></script>
 		<link rel="stylesheet" href="./style/jqueryui/jqueryui-1.8.16.css" type="text/css" media="all" />
+		<!-- <link rel="stylesheet" href="./style/semantic/minified/elements/icon.min.css" type="text/css" media="all" /> -->
+		<link rel="stylesheet" href="./style/semantic/packaged/css/semantic.min.css" type="text/css" media="all" />
 <!--
 		<link media="screen" href="./style/transmission/mobile.css" type= "text/css" rel="stylesheet" />
 -->
@@ -26,6 +28,7 @@
 		<script type="text/javascript" src="./javascript/inspector.js"></script>
 		<script type="text/javascript" src="./javascript/prefs-dialog.js"></script>
 		<script type="text/javascript" src="./javascript/remote.js"></script>
+		<script type="text/javascript" src="./javascript/semantic/semantic.min.js"></script>
 		<script type="text/javascript" src="./javascript/transmission.js"></script>
 		<script type="text/javascript" src="./javascript/torrent.js"></script>
 		<script type="text/javascript" src="./javascript/torrent-row.js"></script>
@@ -38,30 +41,60 @@
 	<body id="transmission_body">
 
 		<div id="toolbar">
-			<div id="toolbar-open" title="Open Torrent"></div>
-			<div id="toolbar-remove" title="Remove Selected Torrents"></div>
-			<div id="toolbar-separator"></div>
-			<div id="toolbar-start" title="Start Selected Torrents"></div>
-			<div id="toolbar-pause" title="Pause Selected Torrents"></div>
-			<div id="toolbar-separator"></div>
-			<div id="toolbar-start-all" title="Start All Torrents"></div>
-			<div id="toolbar-pause-all" title="Pause All Torrents"></div>
-			<div id="toolbar-inspector" title="Toggle Inspector"></div>
+			<div id="toolbar-open" title="Open Torrent">
+				<i class="huge upload disk icon"></i>
+			</div>
+			<div id="toolbar-remove" title="Remove Selected Torrents">
+				<i class="huge remove circle icon"></i>
+			</div>
+			<!-- <div id="toolbar-separator"></div> -->
+			<div id="toolbar-start" title="Start Selected Torrents">
+				<i class="huge play icon"></i>
+			</div>
+			<!-- <div id="toolbar-pause" title="Pause Selected Torrents"></div> -->
+			<div id="toolbar-pause" title="Pause Selected Torrents">
+				<i class="huge pause icon"></i>
+			</div>
+			<!-- <div id="toolbar-separator"></div> -->
+			<div id="toolbar-start-all" title="Start All Torrents">
+				<i class="huge play sign icon"></i>
+			</div>
+			<div id="toolbar-pause-all" title="Pause All Torrents">
+				<i class="huge stop icon"></i>
+			</div>
+			<div id="toolbar-inspector" title="Toggle Inspector">
+				<i class="huge attention icon"></i>
+			</div>
 		</div>
 
-		<div id="statusbar">
+		<div id="statusbar" style="padding-top: 10px;">
 			<div id='filter'>
 				Show
-				<select id="filter-mode">
-					<option value="all">All</option>
-					<option value="active">Active</option>
-					<option value="downloading">Downloading</option>
-					<option value="seeding">Seeding</option>
-					<option value="paused">Paused</option>
-					<option value="finished">Finished</option>
-				</select>
-				<select id="filter-tracker"></select>
-				<input type="search" id="torrent_search" placeholder="Filter" />
+				<div id="filter-mode" class="ui selection dropdown" style="top: 2px;">
+					<input type="hidden" name="">
+					<div class="text">All</div>
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div class="item active" data-value="all">All</div>
+						<div class="item" data-value="active">Active</div>
+						<div class="item" data-value="downloading">Downloading</div>
+						<div class="item" data-value="seeding">Seeding</div>
+						<div class="item" data-value="paused">Paused</div>
+						<div class="item" data-value="finished">Finished</div>
+					</div>
+				</div>
+				<div id="filter-tracker" class="ui selection dropdown" style="top: 2px;">
+					<input type="hidden" name="">
+					<div class="text">All</div>
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div class="item active" data-value="all">All</div>
+					</div>
+				</div>
+				<div class="ui icon small input">
+					<input type="text" id="torrent_search" placeholder="Filter" style="margin-top: 0px !important;" />
+					<i class="search icon" style=""></i>
+				</div>
 				<span id="filter-count">&nbsp;</span>
 			</div>
 
@@ -184,11 +217,29 @@
 			</div>
 		</div>
 
-		<div id="torrent_inspector" style="display:none;">
+		<div id="torrent_inspector" >
 
 			<div id="inspector-tabs-wrapper">
 			<div id="inspector-tabs">
-				<div class="inspector-tab selected" id="inspector-tab-info" title="Info"><a href="#info"></a></div><div class="inspector-tab" id="inspector-tab-peers" title="Peers"><a href="#peers"></a></div><div class="inspector-tab" id="inspector-tab-trackers" title="Trackers"><a href="#trackers"></a></div><div class="inspector-tab" id="inspector-tab-files" title="Files"><a href="#files"></a></div>
+				<div class="ui labeled icon menu">
+					<a id="inspector-tab-info" class="inspector-tab purple item active" href="#info">
+						<i class="attention icon"></i>
+					</a>
+					<a id="inspector-tab-peers" class="inspector-tab purple item" href="#peers">
+						<i class="users icon"></i>
+					</a>
+					<a id="inspector-tab-trackers" class="inspector-tab purple item" href="#trackers">
+						<i class="cloud icon"></i>
+					</a>
+					<a id="inspector-tab-files" class="inspector-tab purple item" href="#files">
+						<i class="file icon"></i>
+					</a>
+				</div>
+				<!-- <div class="inspector-tab selected" id="inspector-tab-info" title="Info"><a href="#info"><i class="attention icon"></i></a></div> -->
+				<!-- <div class="inspector-tab" id="inspector-tab-peers" title="Peers"><a href="#peers"></a></div> -->
+				<!-- <div class="inspector-tab" id="inspector-tab-trackers" title="Trackers"><a href="#trackers"></a></div> -->
+				<!-- <div class="inspector-tab" id="inspector-tab-files" title="Files"><a href="#files"></a></div> -->
+				
 			</div><!-- inspector-tabs -->
 			</div><!-- inspector-tabs-wrapper -->
 
@@ -242,14 +293,26 @@
 			<ul class="torrent_list" id="torrent_list"></ul>
 		</div>
 
-		<div class="dialog_container" id="dialog_container" style="display:none;">
-			<div class="dialog_top_bar"></div>
-			<div class="dialog_window">
-				<div class="dialog_logo" id="dialog_logo"></div>
-				<h2 class="dialog_heading" id="dialog_heading"></h2>
-				<div class="dialog_message" id="dialog_message"></div>
-				<a href="#confirm" id="dialog_confirm_button">Confirm</a>
-				<a href="#cancel" id="dialog_cancel_button">Cancel</a>
+		<div class="dialog_container ui small basic modal " id="dialog_container">
+			<i class="close icon"></i>
+			<!-- <div class="dialog_top_bar"></div> -->
+			<div class="header" id="dialog_heading"></div>
+			<div class="content">
+				<div class="left">
+					<div class="dialog_logo" id="dialog_logo"></div>
+				</div>
+				<div class="right">
+					<div class="dialog_message" id="dialog_message"></div>
+				</div>
+			</div>
+			<!-- <div class="dialog_window"> -->
+			<!-- 	<div class="dialog_logo" id="dialog_logo"></div> -->
+			<!-- 	<h2 class="dialog_heading" id="dialog_heading"></h2> -->
+			<!-- 	<div class="dialog_message" id="dialog_message"></div> -->
+			<!-- </div> -->
+			<div class="actions">
+				<a href="#confirm" id="dialog_confirm_button" class="ui positive button">Confirm</a>
+				<a href="#cancel" id="dialog_cancel_button" class="ui negative button">Cancel</a>
 			</div>
 		</div>
 
@@ -278,26 +341,40 @@
 			</div>
 		</div>
 
-		<div class="dialog_container" id="upload_container" style="display:none;">
-			<div class="dialog_top_bar"></div>
-			<div class="dialog_window">
-				<div class="dialog_logo" id="upload_dialog_logo"></div>
-				<h2 class="dialog_heading">Upload Torrent Files</h2>
-				<form action="#" method="post" id="torrent_upload_form"
-					enctype="multipart/form-data" target="torrent_upload_frame">
-					<div class="dialog_message">
-						<label for="torrent_upload_file">Please select a torrent file to upload:</label>
-							<input type="file" name="torrent_files[]" id="torrent_upload_file" multiple="multiple" />
-						<label for="torrent_upload_url">Or enter a URL:</label>
-							<input type="url" id="torrent_upload_url"/>
-						<label id='add-dialog-folder-label' for="add-dialog-folder-input">Destination folder:</label>
-							<input type="text" id="add-dialog-folder-input"/>
-							<input type="checkbox" id="torrent_auto_start" />
-						<label for="torrent_auto_start" id="auto_start_label">Start when added</label>
-					</div>
-					<a href="#upload" id="upload_confirm_button">Upload</a>
-					<a href="#cancel" id="upload_cancel_button">Cancel</a>
-				</form>
+		<div class="dialog_container ui small modal" id="upload_container">
+			<i class="close icon"></i>
+			<div class="header">Upload Torrent Files</div>
+			<div class="content">
+				<div class="left">
+					<div class="dialog_logo" id="upload_dialog_logo"></div>
+				</div>
+				<div class="right">
+					<form action="#" method="post" id="torrent_upload_form"
+						enctype="multipart/form-data" target="torrent_upload_frame">
+						<div class="dialog_message">
+							<div>
+								<label for="torrent_upload_file">Please select a torrent file to upload:</label>
+								<input type="file" name="torrent_files[]" id="torrent_upload_file" multiple="multiple" />
+							</div>
+							<div class="ui small input" style="display: block;">
+								<label for="torrent_upload_url">Or enter a URL:</label>
+								<input type="text" id="torrent_upload_url"/>
+							</div>
+							<div class="ui small input" style="display: block;">
+								<label id='add-dialog-folder-label' for="add-dialog-folder-input">Destination folder:</label>
+								<input type="text" id="add-dialog-folder-input"/>
+							</div>
+							<div class="ui checkbox">
+								<input type="checkbox" id="torrent_auto_start" />
+								<label for="torrent_auto_start" id="auto_start_label">Start when added</label>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="actions">
+				<a href="#upload" id="upload_confirm_button" class="ui positive button">Upload</a>
+				<a href="#cancel" id="upload_cancel_button" class="ui negative button">Cancel</a>
 			</div>
 		</div>
 
@@ -319,8 +396,9 @@
 		</div>
 
 		<div class="torrent_footer">
-			<ul id="settings_menu" title="Settings Menu">
-				<li id="button">&nbsp;
+			<ul id="settings_menu" class="mini ui icon button" title="Settings Menu">
+				<li id="button" class="setting icon">
+					<i class="setting icon"></i>
 					<ul id="footer_super_menu">
 						<li id="about-button">About</li>
 						<li class="separator"></li>
@@ -388,9 +466,15 @@
 					</ul>
 				</li>
 			</ul>
-			<div id="prefs-button" title="Edit Preferences...">&nbsp;</div>
-			<div id="turtle-button" title="Alternative Speed Limits">&nbsp;</div>
-			<div id="compact-button" title="Compact View">&nbsp;</div>
+			<div id="prefs-button" class="mini ui icon button" title="Edit Preferences...">
+				<i class="wrench icon"></i>
+			</div>
+			<div id="turtle-button" class="mini ui icon button" title="Alternative Speed Limits">
+				<i class="icon"></i>
+			</div>
+			<div id="compact-button" class="mini ui icon button" title="Compact View">
+				<i class="list layout icon"></i>
+			</div>
 		</div>
 
 		<div class="contextMenu" id="torrent_context_menu">

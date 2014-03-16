@@ -66,7 +66,7 @@ $(document).ready(function() {
 		// Fix for non-Safari-3 browsers: dark borders to replace shadows.
 		// Opera messes up the menu if we use a border on .trans_menu
 		// div.outerbox so use ul instead
-		$('.trans_menu ul, div#jqContextMenu, div.dialog_container div.dialog_window').css('border', '1px solid #777');
+		/* $('.trans_menu ul, div#jqContextMenu, div.dialog_container div.dialog_window').css('border', '1px solid #777'); */
 		// and this kills the border we used to have
 		$('.trans_menu div.outerbox').css('border', 'none');
 	}

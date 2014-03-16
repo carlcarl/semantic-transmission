@@ -45,7 +45,8 @@ Dialog.prototype = {
 	hideDialog: function()
 	{
 		$('body.dialog_showing').removeClass('dialog_showing');
-		this._container.hide();
+		// this._container.hide();
+        this._container.modal('hide');
 		transmission.hideMobileAddressbar();
 		transmission.updateButtonStates();
 	},
@@ -75,7 +76,10 @@ Dialog.prototype = {
 	                  callback_function, callback_data, cancel_button_label)
 	{
 		if (!isMobileDevice)
-			$('.dialog_container').hide();
+        {
+			$('.dialog_container').modal('hide');
+			// $('.dialog_container').hide();
+        }
 		setTextContent(this._heading[0], dialog_heading);
 		setTextContent(this._message[0], dialog_message);
 		setTextContent(this._cancel_button[0], cancel_button_label || 'Cancel');
@@ -84,7 +88,8 @@ Dialog.prototype = {
 		this._callback_function = callback_function;
 		this._callback_data = callback_data;
 		$('body').addClass('dialog_showing');
-		this._container.show();
+		// this._container.show();
+		this._container.modal('show');
 		transmission.updateButtonStates();
 		if (isMobileDevice)
 			transmission.hideMobileAddressbar();
@@ -95,20 +100,23 @@ Dialog.prototype = {
 	 */
 	alert: function(dialog_heading, dialog_message, cancel_button_label) {
 		if (!isMobileDevice)
-			$('.dialog_container').hide();
+        {
+			$('.dialog_container').modal('hide');
+        }
 		setTextContent(this._heading[0], dialog_heading);
 		setTextContent(this._message[0], dialog_message);
 		// jquery::hide() doesn't work here in Safari for some odd reason
 		this._confirm_button.css('display', 'none');
 		setTextContent(this._cancel_button[0], cancel_button_label);
 		// Just in case
-		$('#upload_container').hide();
+		$('#upload_container').modal('hide');
 		$('#move_container').hide();
 		$('body').addClass('dialog_showing');
 		transmission.updateButtonStates();
 		if (isMobileDevice)
 			transmission.hideMobileAddressbar();
-		this._container.show();
+		// this._container.show();
+        this._container.modal('show');
 	}
 	
 

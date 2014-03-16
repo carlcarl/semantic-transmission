@@ -8,6 +8,18 @@
 function Transmission()
 {
 	this.initialize();
+    var that = this;
+    $('.ui.checkbox').checkbox();
+    $('.ui.modal').modal();
+    $('.ui.modal').modal('setting', {
+        onDeny: function(){
+            return false;
+        },
+        onApprove: function(){
+            that.confirmUploadClicked(that);
+            return true;
+        },
+    });
 }
 
 Transmission.prototype =
@@ -50,7 +62,7 @@ Transmission.prototype =
 
 		$('#prefs-button').click($.proxy(this.togglePrefsDialogClicked,this));
 
-		$('#upload_confirm_button').click($.proxy(this.confirmUploadClicked,this));
+		// $('#upload_confirm_button').click($.proxy(this.confirmUploadClicked,this));
 		$('#upload_cancel_button').click($.proxy(this.hideUploadDialog,this));
 
 		$('#move_confirm_button').click($.proxy(this.confirmMoveClicked,this));
@@ -67,9 +79,22 @@ Transmission.prototype =
 		$('#toolbar-inspector').click($.proxy(this.toggleInspector,this));
 
 		e = $('#filter-mode');
+        e.dropdown();
+        var that = this;
+        e.dropdown('setting', {
+            onChange: function(value, text){
+                that.onFilterModeClicked(value);
+            }
+        });
 		e.val(this[Prefs._FilterMode]);
-		e.change($.proxy(this.onFilterModeClicked,this));
-		$('#filter-tracker').change($.proxy(this.onFilterTrackerClicked,this));
+		// e.change($.proxy(this.onFilterModeClicked,this));
+        $('#filter-tracker').dropdown();
+        $('#filter-tracker').dropdown('setting', {
+            onChange: function(value, text){
+                that.onFilterTrackerClicked(value);
+            }
+        });
+		// $('#filter-tracker').change($.proxy(this.onFilterTrackerClicked,this));
 
 		if (!isMobileDevice) {
 			$(document).bind('keydown', $.proxy(this.keyDown,this) );
@@ -553,13 +578,13 @@ Transmission.prototype =
 
 	hideUploadDialog: function() {
 		$('body.open_showing').removeClass('open_showing');
-		$('#upload_container').hide();
+		$('#upload_container').modal('hide');
 		this.updateButtonStates();
 	},
 
-	confirmUploadClicked: function() {
-		this.uploadTorrentFile(true);
-		this.hideUploadDialog();
+	confirmUploadClicked: function(that) {
+		that.uploadTorrentFile(true);
+		that.hideUploadDialog();
 	},
 
 	hideMoveDialog: function() {
@@ -918,7 +943,7 @@ Transmission.prototype =
 			this.updateFreeSpaceInAddDialog();
 
 			// show the dialog
-			$('#upload_container').show();
+			$('#upload_container').modal('show');
 			urlInput.focus();
 		}
 		else
@@ -1237,20 +1262,39 @@ Transmission.prototype =
 		names.sort();
 
 		// build the new html
+		// if (!this.filterTracker)
+		// 	str = '<option value="all" selected="selected">All</option>';
+		// else
+		// 	str = '<option value="all">All</option>';
+		// for (i=0; name=names[i]; ++i) {
+		// 	o = trackers[name];
+		// 	str += '<option value="' + o.domain + '"';
+		// 	if (trackers[name].domain === this.filterTracker) str += ' selected="selected"';
+		// 	str += '>' + name + '</option>';
+		// }
+ 
 		if (!this.filterTracker)
-			str = '<option value="all" selected="selected">All</option>';
+            str = '<div class="item active" data-value="all">All</div>';
 		else
-			str = '<option value="all">All</option>';
+            str = '<div class="item active" data-value="all">All</div>';
 		for (i=0; name=names[i]; ++i) {
 			o = trackers[name];
-			str += '<option value="' + o.domain + '"';
-			if (trackers[name].domain === this.filterTracker) str += ' selected="selected"';
-			str += '>' + name + '</option>';
+			str += '<div data-value="' + o.domain + '"';
+			if (trackers[name].domain === this.filterTracker) str += ' class="item active"';
+            else str += ' class="item"';
+			str += '>' + name + '</div>';
 		}
 
 		if (!this.filterTrackersStr || (this.filterTrackersStr !== str)) {
 			this.filterTrackersStr = str;
-			$('#filter-tracker').html(str);
+			$('#filter-tracker .menu').html(str);
+            $('#filter-tracker').dropdown();
+            var that = this;
+            $('#filter-tracker').dropdown('setting', {
+                onChange: function(value, text){
+                    that.onFilterTrackerClicked(value);
+                }
+            });
 		}
 	},
 
@@ -1311,7 +1355,8 @@ Transmission.prototype =
 			this.inspector.setTorrents(this.getSelectedTorrents());
 
 		// update the ui widgetry
-		$('#torrent_inspector').toggle(visible);
+		// $('#torrent_inspector').toggle();
+        $('#torrent_inspector').toggleClass('show');
 		$('#toolbar-inspector').toggleClass('selected',visible);
 		this.hideMobileAddressbar();
 		if (isMobileDevice) {
@@ -1482,21 +1527,23 @@ Transmission.prototype =
 	setFilterMode: function(mode)
 	{
 		// set the state
+        console.log(mode);
 		this.setPref(Prefs._FilterMode, mode);
 
 		// refilter
 		this.refilter(true);
+        console.log(Prefs._FilterMode);
 	},
 
-	onFilterModeClicked: function(ev)
+	onFilterModeClicked: function(value)
 	{
-		this.setFilterMode($('#filter-mode').val());
+		this.setFilterMode(value);
 	},
 
-	onFilterTrackerClicked: function(ev)
+	onFilterTrackerClicked: function(value)
 	{
-		var tracker = $('#filter-tracker').val();
-		this.setFilterTracker(tracker==='all' ? null : tracker);
+		// var tracker = $('#filter-tracker').val();
+		this.setFilterTracker(value==='all' ? null : value);
 	},
 
 	setFilterTracker: function(domain)
