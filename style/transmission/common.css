@@ -263,7 +263,6 @@ ul.torrent_list {
         background-position: center center; }
     ul.torrent_list li.torrent div.torrent_name {
       font-size: 1.3em;
-      font-weight: bold;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
