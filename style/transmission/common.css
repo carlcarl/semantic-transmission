@@ -446,7 +446,9 @@ div#torrent_inspector {
 }
   div#torrent_inspector.show {
     /* right: 0px; */
+    -moz-transform: translateX(-580px);
     -webkit-transform: translateX(-580px);
+    transform: translateX(-580px);
   }
   div#torrent_inspector #inspector-close {
     display: none; 
