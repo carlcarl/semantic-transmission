@@ -780,39 +780,17 @@ div.torrent_footer {
     div.torrent_footer #prefs-button:active, div.torrent_footer #prefs-button.selected {
     }
   div.torrent_footer #turtle-button {
-    background-image: url("images/turtle.png");
-    /* fallback */
-    background-image: url("images/turtle.png");
-    /* Saf4+, Chrome */
-    background-image: url("images/turtle.png");
-    /* Chrome 10+, Saf5.1+ */
-    background-image: url("images/turtle.png");
-    /* FF3.6+ */
-    background-image: url("images/turtle.png");
-    /* IE10 */
-    background-image: url("images/turtle.png");
-    /* Opera 11.10+ */
-    background-position: center;
-    background-repeat: no-repeat; }
+  }
     div.torrent_footer #turtle-button:active, div.torrent_footer #turtle-button.selected {
-      background-image: url("images/turtle.png");
-      /* fallback */
-      background-image: url("images/turtle.png");
-      /* Saf4+, Chrome */
-      background-image: url("images/turtle.png");
-      /* Chrome 10+, Saf5.1+ */
-      background-image: url("images/turtle.png");
-      /* FF3.6+ */
-      background-image: url("images/turtle.png");
-      /* IE10 */
-      background-image: url("images/turtle.png");
-      /* Opera 11.10+ */
-      background-position: center;
-      background-repeat: no-repeat; }
+    }
     div.torrent_footer #turtle-button:active, div.torrent_footer #turtle-button.selected {
     }
     div.torrent_footer #turtle-button .icon{
       opacity: 0.5;
+      background-color: white;
+    }
+    div.torrent_footer #turtle-button .icon:hover{
+      opacity: 0.7;
       background-color: white;
     }
     div.torrent_footer #turtle-button .icon:active, div.torrent_footer #turtle-button.selected .icon {
